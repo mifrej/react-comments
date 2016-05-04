@@ -6,6 +6,15 @@ import React from 'react';
 
 class CommentBox extends React.Component {
 
+  constructor() {
+    super();
+
+    this.state = {
+      showComments: false
+    };
+
+  }
+
   _getComments() {
 
     const commentList = [
@@ -34,7 +43,6 @@ class CommentBox extends React.Component {
     });
   }
 
-
   _getCommentsTitle(commentCount) {
     if (commentCount === 1) {
       return  '1 comment';
@@ -58,9 +66,22 @@ class CommentBox extends React.Component {
     }
   }
 
+  _handleClick() {
+    this.setState({
+      showComments: !this.state.showComments
+    });
+  }
 
   render() {
     const comments = this._getComments();
+    let commentNodes;
+    let buttonText = 'Show comments';
+
+    if (this.state.showComments) {
+      buttonText = 'Hide comments';
+      commentNodes = <div className="comment-list"> {comments} </div>;
+    }
+
     return (
       <div className="comment-box">
         <h3>Comments</h3>
@@ -68,9 +89,8 @@ class CommentBox extends React.Component {
           {this._getCommentsTitle(comments.length)}
         </h4>
         {this._getPopularMessage(comments.length)}
-        <div className="comment-list">
-          {comments}
-        </div>
+        <button onClick={this._handleClick.bind(this)} >{buttonText}</button>
+        {commentNodes}
       </div>
     );
   }
