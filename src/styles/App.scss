@@ -1,7 +1,7 @@
 /* Base Application Styles */
 body {
-  color: #fff;
-  background: #222;
+  background-color:#fff;
+  background-color:#6ba2aa;
 }
 
 .index img {
@@ -18,4 +18,8 @@ body {
   border: 1px solid #000;
   border-width: 1px 0;
   background: #666;
+}
+
+.comment-box{
+  margin:1rem;
 }
