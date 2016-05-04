@@ -10,7 +10,16 @@ class CommentBox extends React.Component {
 
     const commentList = [
       { id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png' },
-      { id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' }
+      { id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
+      { id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' }
     ];
 
     return commentList.map( (comment) => {
@@ -38,6 +47,17 @@ class CommentBox extends React.Component {
     }
   }
 
+  _getPopularMessage(commentCount) {
+    const POPULAR_COUNT = 10
+    if(commentCount > POPULAR_COUNT) {
+      return (
+        <p className="popular-count">
+          This post is getting really popular!
+        </p>
+      );
+    }
+  }
+
 
   render() {
     const comments = this._getComments();
@@ -47,6 +67,7 @@ class CommentBox extends React.Component {
         <h4 className="comment-count">
           {this._getCommentsTitle(comments.length)}
         </h4>
+        {this._getPopularMessage(comments.length)}
         <div className="comment-list">
           {comments}
         </div>
