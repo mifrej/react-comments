@@ -9,26 +9,26 @@ class CommentBox extends React.Component {
     super();
 
     this.state = {
-      showComments: false
+      showComments: false,
+      comments: [
+        {id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png'},
+        {id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+        {id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'}
+      ]
     };
   }
 
   _getComments() {
-    const commentList = [
-      {id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png'},
-      {id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-      {id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'}
-    ];
 
-    return commentList.map(comment => {
+    return this.state.comments.map(comment => {
       return (
         <Comment
           author={comment.author}
@@ -67,6 +67,15 @@ class CommentBox extends React.Component {
     });
   }
 
+  _addComment(author, body) {
+    const comment = {
+      id: this.state.comments.length + 1,
+      author,
+      body
+    };
+    this.setState({ comments: this.state.comments.concat([comment]) });
+  }
+
   render() {
     const comments = this._getComments();
     let commentNodes;
@@ -80,7 +89,7 @@ class CommentBox extends React.Component {
     return (
       <div className="comment-box">
         <h3>Join the discussion</h3>
-        <CommentForm />
+        <CommentForm addComment={this._addComment.bind(this)} />
         <h3>Comments</h3>
         <h4 className="comment-count">
           {this._getCommentsTitle(comments.length)}
@@ -141,8 +150,13 @@ class CommentForm extends React.Component {
       <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
         <label>Join the discussion</label>
         <div className="comment-form-fields">
-          <input placeholder="Name:" />
-          <textarea placeholder="Comment:"></textarea>
+          <div className="form-elem">
+            <input placeholder="Name:" ref={input => this._author = input} />
+          </div>
+          <div className="form-elem">
+            <textarea placeholder="Comment:" ref={textarea => this._body = textarea} >
+            </textarea>
+          </div>
         </div>
         <div className="comment-from-actions">
           <button type="submit">
@@ -155,6 +169,11 @@ class CommentForm extends React.Component {
 
   _handleSubmit(event) {
     event.preventDefault();
+
+    let author = this._author;
+    let body = this._body;
+
+    this.props.addComment(author.value, body.value);
   }
 
 }
