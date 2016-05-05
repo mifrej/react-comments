@@ -3,7 +3,6 @@ require('styles/App.scss');
 
 import React from 'react';
 
-
 class CommentBox extends React.Component {
 
   constructor() {
@@ -12,26 +11,24 @@ class CommentBox extends React.Component {
     this.state = {
       showComments: false
     };
-
   }
 
   _getComments() {
-
     const commentList = [
-      { id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png' },
-      { id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' },
-      { id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png' }
+      {id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png'},
+      {id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
+      {id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'}
     ];
 
-    return commentList.map( (comment) => {
+    return commentList.map(comment => {
       return (
         <Comment
           author={comment.author}
@@ -45,19 +42,17 @@ class CommentBox extends React.Component {
 
   _getCommentsTitle(commentCount) {
     if (commentCount === 1) {
-      return  '1 comment';
+      return '1 comment';
     }
-    else if (commentCount === 0) {
+    if (commentCount === 0) {
       return 'No comments yet';
     }
-    else {
-      return `${commentCount} comments`;
-    }
+    return `${commentCount} comments`;
   }
 
   _getPopularMessage(commentCount) {
-    const POPULAR_COUNT = 10
-    if(commentCount > POPULAR_COUNT) {
+    const POPULAR_COUNT = 10;
+    if (commentCount > POPULAR_COUNT) {
       return (
         <p className="popular-count">
           This post is getting really popular!
@@ -84,6 +79,8 @@ class CommentBox extends React.Component {
 
     return (
       <div className="comment-box">
+        <h3>Join the discussion</h3>
+        <CommentForm />
         <h3>Comments</h3>
         <h4 className="comment-count">
           {this._getCommentsTitle(comments.length)}
@@ -101,10 +98,10 @@ class Comment extends React.Component {
     super();
     this.state = {
       isAbusive: false
-    }
+    };
   }
 
-  _toggleAbuse(event){
+  _toggleAbuse(event) {
     event.preventDefault();
     this.setState({
       isAbusive: !this.state.isAbusive
@@ -112,18 +109,18 @@ class Comment extends React.Component {
   }
 
   render() {
-
     let commentBody;
-    if(!this.state.isAbusive) {
-      commentBody = this.props.body;
-    }
-    else {
+    if (this.state.isAbusive) {
       commentBody = <em>Content marked as abusive</em>;
+    } else {
+      commentBody = this.props.body;
     }
 
     return (
       <div className="comment">
-        <img src={this.props.avatarUrl} alt={`${this.props.author}'s comment`} />
+        <img
+          src={this.props.avatarUrl}
+          alt={`${this.props.author}'s comment`} />
         <p className="comment-header">{ this.props.author }</p>
         <p className="comment-body">
           { commentBody }
@@ -136,6 +133,30 @@ class Comment extends React.Component {
       </div>
     );
   }
+}
+
+class CommentForm extends React.Component {
+  render() {
+    return (
+      <form className="comment-form" onSubmit={this._handleSubmit.bind(this)}>
+        <label>Join the discussion</label>
+        <div className="comment-form-fields">
+          <input placeholder="Name:" />
+          <textarea placeholder="Comment:"></textarea>
+        </div>
+        <div className="comment-from-actions">
+          <button type="submit">
+            Post comment
+          </button>
+        </div>
+      </form>
+    );
+  }
+
+  _handleSubmit(event) {
+    event.preventDefault();
+  }
+
 }
 
 CommentBox.defaultProps = {
