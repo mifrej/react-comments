@@ -154,7 +154,10 @@ class CommentForm extends React.Component {
             <input placeholder="Name:" ref={input => this._author = input} />
           </div>
           <div className="form-elem">
-            <textarea placeholder="Comment:" ref={textarea => this._body = textarea} >
+            <textarea
+              placeholder="Comment:"
+              ref={textarea => this._body = textarea}
+              onKeyUp={this._getCharacterCount.bind(this)}>
             </textarea>
           </div>
         </div>
@@ -173,7 +176,18 @@ class CommentForm extends React.Component {
     let author = this._author;
     let body = this._body;
 
-    this.props.addComment(author.value, body.value);
+    if(author.value && body.value) {
+      this.props.addComment(author.value, body.value);
+    } else {
+      alert('Please enter your name and comment');
+    }
+
+  }
+
+  _getCharacterCount(){
+    this.setState({
+      characters: this._body.value.length
+    });
   }
 
 }
