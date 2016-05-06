@@ -20,6 +20,28 @@ class CommentBox extends React.Component {
     this._fetchComments();
   }
 
+  _deleteComment(commentID) {
+    const ROOT_URL = 'http://jsonplaceholder.typicode.com';
+    jQuery.ajax({
+      method: 'DELETE',
+      url: `${ROOT_URL}/comments/${commentID}`,
+      success: () => {
+        console.log(`deleted ${commentID}`)
+      }
+    });
+
+    //optimistic update (before ajax is done)
+    const comments = [...this.state.comments];
+    let commentIndex;
+
+    comments.map(comment => {
+      if(comment.id === commentID){
+        commentIndex = comments.indexOf(comment);
+      }
+    });
+    comments.splice(commentIndex, 1);
+    this.setState({comments})
+  }
 
   _fetchComments() {
     const ROOT_URL = 'http://jsonplaceholder.typicode.com';
@@ -41,7 +63,10 @@ class CommentBox extends React.Component {
           author={comment.email}
           body={comment.body}
           avatarUrl={comment.avatarUrl}
-          key={comment.id} />
+          key={comment.id}
+          onDelete={this._deleteComment.bind(this)}
+          commentID={comment.id}
+          />
       );
     });
   }
@@ -123,6 +148,13 @@ class Comment extends React.Component {
     });
   }
 
+  _handleDelete(event) {
+    event.preventDefault();
+    if(confirm(`Do you really want to delete ${this.props.author}' comment?`)){
+      this.props.onDelete(this.props.commentID);
+    }
+  }
+
   render() {
     let commentBody;
     if (this.state.isAbusive) {
@@ -141,7 +173,7 @@ class Comment extends React.Component {
           { commentBody }
         </p>
         <div className="comment-actions">
-          <a href="#">Delete comment</a>
+          <a href="#" onClick={this._handleDelete.bind(this)} >Delete comment</a>
           <a href="#" onClick={this._toggleAbuse.bind(this)}>Report as Abuse</a>
         </div>
         <hr />
