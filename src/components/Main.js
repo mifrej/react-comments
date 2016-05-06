@@ -1,5 +1,7 @@
 require('normalize.css/normalize.css');
 require('styles/App.scss');
+var jQuery = require('jquery');
+
 
 import React from 'react';
 
@@ -10,20 +12,25 @@ class CommentBox extends React.Component {
 
     this.state = {
       showComments: false,
-      comments: [
-        {id: 1, author: 'Mick Griffin', body: 'What is love ?', avatarUrl: '../images/yeoman.png'},
-        {id: 2, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 3, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 4, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 5, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 6, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 7, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 8, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 9, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 10, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'},
-        {id: 11, author: 'John Doe', body: 'Baby don\'t hurt me', avatarUrl: '../images/yeoman.png'}
-      ]
+      comments: []
     };
+  }
+
+  componentWillMount() {
+    this._fetchComments();
+  }
+
+
+  _fetchComments() {
+    const ROOT_URL = 'http://jsonplaceholder.typicode.com';
+
+    jQuery.ajax({
+      method: 'GET',
+      url: `${ROOT_URL}/comments`,
+      success: comments => {
+        this.setState({comments})
+      }
+    });
   }
 
   _getComments() {
@@ -31,11 +38,10 @@ class CommentBox extends React.Component {
     return this.state.comments.map(comment => {
       return (
         <Comment
-          author={comment.author}
+          author={comment.email}
           body={comment.body}
           avatarUrl={comment.avatarUrl}
-          key={comment.id}
-        />
+          key={comment.id} />
       );
     });
   }
