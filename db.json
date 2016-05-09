@@ -1,0 +1,34 @@
+{
+  "comments": [
+    {
+      "author": "Milosz Frejnik",
+      "body": "Some comment body to fill the space",
+      "avatarUrl": "../images/yeoman.png",
+      "id": 1
+    },
+    {
+      "author": "asd",
+      "body": "asdq2",
+      "avatarUrl": "../images/yeoman.png",
+      "id": 5
+    },
+    {
+      "author": "asd",
+      "body": "asdq2",
+      "avatarUrl": "../images/yeoman.png",
+      "id": 6
+    },
+    {
+      "author": "asd",
+      "body": "asdq2",
+      "avatarUrl": "../images/yeoman.png",
+      "id": 7
+    },
+    {
+      "author": "New one ",
+      "body": "Tra la la ",
+      "avatarUrl": "../images/yeoman.png",
+      "id": 8
+    }
+  ]
+}

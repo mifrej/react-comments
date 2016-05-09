@@ -21,7 +21,7 @@ class CommentBox extends React.Component {
   }
 
   _deleteComment(commentID) {
-    const ROOT_URL = 'http://jsonplaceholder.typicode.com';
+    const ROOT_URL = 'http://localhost:3000';
     jQuery.ajax({
       method: 'DELETE',
       url: `${ROOT_URL}/comments/${commentID}`,
@@ -44,7 +44,7 @@ class CommentBox extends React.Component {
   }
 
   _fetchComments() {
-    const ROOT_URL = 'http://jsonplaceholder.typicode.com';
+    const ROOT_URL = 'http://localhost:3000';
 
     jQuery.ajax({
       method: 'GET',
@@ -56,11 +56,10 @@ class CommentBox extends React.Component {
   }
 
   _getComments() {
-
     return this.state.comments.map(comment => {
       return (
         <Comment
-          author={comment.email}
+          author={comment.author}
           body={comment.body}
           avatarUrl={comment.avatarUrl}
           key={comment.id}
